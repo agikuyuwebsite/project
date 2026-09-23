@@ -1,0 +1,77 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const ways = [
+  {
+    title: "Sponsor Our Research",
+    topic: "research-sponsorship",
+    cta: "Sponsor Research",
+    paras: [
+      "Our research and documentation work help preserve knowledge that might otherwise be lost and creates opportunities for Agìkūyū history, culture, language, spirituality, traditions and indigenous knowledge to be studied and shared.",
+      "You can support specific research projects, oral history initiatives, cultural documentation, publications, fieldwork and knowledge-preservation activities through sponsorship.",
+      "Research sponsors may choose to support a particular project, area of research or broader research Programme.",
+    ],
+  },
+  {
+    title: "Donate",
+    topic: "donation",
+    cta: "Support Our Work",
+    paras: [
+      "Every contribution helps us continue the work of documenting, preserving and sharing Agìkūyū heritage.",
+      "Donations may support research, oral history documentation, language resources, publications, educational materials, cultural programmes, digital preservation and community initiatives.",
+      "Whether large or small, every contribution helps sustain this work and make cultural knowledge more accessible to future generations.",
+    ],
+  },
+  {
+    title: "Partner with Us",
+    topic: "partnership",
+    cta: "Become a Partner",
+    paras: [
+      "We welcome partnerships with research institutions, universities, cultural organizations, foundations, businesses, community organizations, museums, media organizations and other institutions interested in supporting African cultural heritage and knowledge.",
+      "Partnerships can take many forms — from research sponsorship and funding to co-created projects, knowledge exchange, cultural programming, publications, documentation and educational initiatives.",
+      "If you share our commitment to preserving and advancing cultural knowledge, we invite you to partner with us.",
+    ],
+  },
+];
+---
+
+<Layout title="Partner With Us" description="Sponsor our research, donate, or partner with Agìkūyū Women & Men to preserve Agìkūyū heritage.">
+  <section class="page-hero">
+    <img class="hero-img" src="/images/seven.jpg" alt="" width="1600" height="700" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Partner With Us</p>
+      <h1 class="hero-title">Join the <em>Journey</em></h1>
+    </div>
+  </section>
+
+  <section class="section-wrap tight">
+    <div class="prose narrow reveal" style="text-align:center;">
+      <p>
+        Agìkūyū heritage belongs not only to the past. It is a living inheritance that continues to shape the present
+        and can inform the future.
+      </p>
+      <p>
+        Through research, language, stories, publications, cultural programmes and community engagement, we invite
+        individuals and organizations to participate in the work of retrieving, re-evaluating, replenishing,
+        documenting and celebrating Agìkūyū heritage.
+      </p>
+    </div>
+    <p class="motto reveal">Our heritage. Our knowledge. Our responsibility. Our future.</p>
+    <p class="section-sub center reveal" style="max-width: 640px;">There are many ways to become part of this work.</p>
+  </section>
+
+  <section class="section-wrap tight tinted">
+    <div class="grid-3">
+      {ways.map((w, i) => (
+        <article class={`card plain way reveal ${i === 1 ? "d1" : i === 2 ? "d2" : ""}`} id={w.topic}>
+          <div class="card-body">
+            <h2 class="card-title way-title">{w.title}</h2>
+            {w.paras.map((p) => <p class="card-desc">{p}</p>)}
+            <a href={`/contact?topic=${w.topic}`} class="btn-primary card-cta" style="padding: 13px 26px;">{w.cta}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

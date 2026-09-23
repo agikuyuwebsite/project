@@ -1,0 +1,118 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SITE, CONTACT_TOPICS } from "../data/site.js";
+---
+
+<Layout title="Contact Us" description="Get in touch with Agìkūyū Women & Men — research, partnership, publications, language classes and general enquiries.">
+  <section class="page-hero">
+    <img class="hero-img" src="/images/seven.jpg" alt="" width="1600" height="700" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Contact Us</p>
+      <h1 class="hero-title">Get in <em>Touch</em></h1>
+    </div>
+  </section>
+
+  <section class="section-wrap tight">
+    <div class="contact-person reveal">
+      <p class="cp-name">{SITE.contactPerson.name}</p>
+      <p class="cp-role">{SITE.contactPerson.role}</p>
+      <p class="cp-org">{SITE.contactPerson.organisation}</p>
+    </div>
+
+    <div class="contact-grid" style="margin-top: 36px;">
+      <a href={`mailto:${SITE.email}`} class="contact-tile reveal">
+        <span class="contact-label">Email</span>
+        <span class="contact-detail">{SITE.email}</span>
+      </a>
+      <a href={`tel:${SITE.phone}`} class="contact-tile reveal d1">
+        <span class="contact-label">Phone</span>
+        <span class="contact-detail">{SITE.phone}</span>
+      </a>
+      <a href={`https://wa.me/${SITE.whatsappNumber}`} target="_blank" rel="noopener noreferrer" class="contact-tile reveal d2">
+        <span class="contact-label">WhatsApp</span>
+        <span class="contact-detail">{SITE.phone}</span>
+      </a>
+    </div>
+
+    <div class="contact-grid two" style="margin-top: 20px;">
+      {SITE.social.map((s, i) => {
+        const Tag = s.url ? "a" : "div";
+        const attrs = s.url ? { href: s.url, target: "_blank", rel: "noopener noreferrer" } : {};
+        return (
+          <Tag class={`contact-tile reveal ${i % 2 ? "d1" : ""}`} {...attrs}>
+            <span class="contact-label">{s.label}</span>
+            <span class="contact-detail">{s.handle}</span>
+          </Tag>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section-wrap tight tinted" id="contact-form">
+    <div class="eyebrow center" style="justify-content:center;">Contact Form</div>
+    <h2 class="section-title center">Send Us <em>a Message</em></h2>
+
+    <div class="form-card reveal" style="margin-top: 44px;">
+      <form data-form="contact">
+        <label>
+          Name
+          <input type="text" name="name" autocomplete="name" required />
+        </label>
+        <label>
+          Email / Phone
+          <input type="text" name="contact" autocomplete="email" required />
+        </label>
+        <label>
+          I am contacting you about:
+          <select name="topic" required>
+            <option value="" disabled selected>Select a topic</option>
+            {CONTACT_TOPICS.map((t) => <option value={t.value}>{t.label}</option>)}
+          </select>
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button type="submit">Submit</button>
+        <p class="form-note">Submitting opens WhatsApp with your message ready to send to our team.</p>
+      </form>
+    </div>
+
+    <p class="form-lead reveal">
+      Have a question, an idea, a research project or an opportunity to collaborate? Send us a message and our team will get back to you.
+    </p>
+    <p class="signoff reveal">
+      <strong>{SITE.name}</strong><br />
+      {SITE.tagline}
+    </p>
+  </section>
+</Layout>
+
+<script>
+  import { whatsappLink } from "../data/site.js";
+
+  const form = document.querySelector('form[data-form="contact"]') as HTMLFormElement | null;
+
+  // Pre-select the topic when arriving from another page (e.g. /contact?topic=donation)
+  const wanted = new URLSearchParams(window.location.search).get("topic");
+  if (form && wanted) {
+    const select = form.elements.namedItem("topic") as HTMLSelectElement;
+    if ([...select.options].some((o) => o.value === wanted)) select.value = wanted;
+  }
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const select = form.elements.namedItem("topic") as HTMLSelectElement;
+    const topicLabel = select.options[select.selectedIndex]?.text ?? "";
+
+    const text =
+      `Website enquiry\n` +
+      `Name: ${data.get("name")}\n` +
+      `Email / Phone: ${data.get("contact")}\n` +
+      `About: ${topicLabel}\n` +
+      `Message: ${data.get("message")}`;
+    window.open(whatsappLink(text), "_blank");
+  });
+</script>

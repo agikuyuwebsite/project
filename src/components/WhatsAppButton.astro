@@ -1,0 +1,11 @@
+---
+// Drop-in replacement for a "buy"/"submit" button anywhere payment would normally go.
+// Usage: <WhatsAppButton message="I'm interested in ..." label="Order via WhatsApp" />
+import { whatsappLink } from "../data/site.js";
+
+const { message, label = "Chat on WhatsApp" } = Astro.props;
+---
+
+<a href={whatsappLink(message)} target="_blank" rel="noopener noreferrer" data-whatsapp-cta>
+  {label}
+</a>

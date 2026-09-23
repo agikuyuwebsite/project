@@ -1,0 +1,88 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const steps = ["Retrieve", "Re-evaluate", "Replenish", "Document", "Celebrate"];
+---
+
+<Layout title="About Us" description="Agìkūyū Women and Men is a cultural heritage initiative founded in 2017 and formally registered in 2018.">
+  <section class="page-hero">
+    <img class="hero-img" src="/images/thirteen.jpg" alt="" width="1600" height="700" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">About Us</p>
+      <h1 class="hero-title">Who <em>We Are</em></h1>
+    </div>
+  </section>
+
+  <section class="section-wrap tight" style="padding-bottom: 20px;">
+    <div class="eyebrow center" style="justify-content:center;">Mission Statement</div>
+    <ol class="steps-strip reveal">
+      {steps.map((s, i) => (
+        <li><span class="step-num">{String(i + 1).padStart(2, "0")}</span><span class="step-name">{s}</span></li>
+      ))}
+    </ol>
+    <p class="section-sub center reveal" style="max-width: 720px;">
+      Retrieve → Re-evaluate → Replenish → Document → Celebrate Agìkūyū history, heritage, culture and Gìkūyū language.
+    </p>
+  </section>
+
+  <section class="section-wrap">
+    <div class="row reveal">
+      <div class="prose">
+        <div class="eyebrow">Who We Are</div>
+        <p>
+          Agìkūyū Women and Men is a cultural heritage initiative founded in 2017 and formally registered in 2018
+          with a shared vision: to safeguard the wisdom, traditions, history, language and identity of the Agìkūyū people.
+        </p>
+        <p>
+          We work to ensure that the knowledge carried by generations is not lost as societies change. Our focus includes
+          the Gìkūyū language, oral literature, songs, traditions, indigenous knowledge, history, cultural practices and community memory.
+        </p>
+        <p>
+          Our work recognizes that heritage is not simply something from the past. It is a living source of identity,
+          knowledge and belonging that continues to shape how communities understand themselves and their place in the world.
+        </p>
+      </div>
+      <img src="/images/nine.jpg" alt="Women in traditional dress" width="700" height="520" loading="lazy" />
+    </div>
+  </section>
+
+  <section class="section-wrap tinted">
+    <div class="prose narrow">
+      <div class="prose-block reveal">
+        <div class="eyebrow">Why We Exist</div>
+        <p>
+          <strong>We exist</strong> because much of our culture, history, and Agìkūyū heritage—our language, songs,
+          oral literature, traditional knowledge, and community practices—is at risk of being forgotten in the face
+          of modernization and globalization.
+        </p>
+      </div>
+
+      <div class="prose-block reveal">
+        <div class="eyebrow">Our Mission</div>
+        <p>
+          <strong>Our mission</strong> is to Retrieve, Re-evaluate, Replenish, Document, and to Celebrate Agìkūyū culture,
+          history, and Gìkūyū language so that current and future generations can understand, honor, and carry forward
+          their heritage with pride.
+        </p>
+      </div>
+
+      <div class="prose-block reveal">
+        <div class="eyebrow">Why This Is Important</div>
+        <p>
+          Our culture is the heartbeat of who we are as a people. Yet, many of our traditions and historical truths are
+          disappearing as elders pass on and younger generations grow up disconnected from their roots. Preserving the
+          Agìkūyū heritage is not just about remembering the past—it is about protecting identity, reclaiming pride, and
+          ensuring that our stories, wisdom, and language continue to inspire generations to come. If we do not act now,
+          we risk losing invaluable knowledge, practices, and perspectives that have shaped our community for centuries.
+          This initiative ensures that our children and grandchildren will inherit not only our names but also the rich
+          heritage that defines us.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip">
+    <p>Explore <a href="/our-work">Our Work</a> &middot; visit the <a href="/bookshop">Bookshop</a> &middot; <a href="/partner">Partner With Us</a></p>
+  </section>
+</Layout>

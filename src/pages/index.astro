@@ -1,0 +1,296 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BookCover from "../components/BookCover.astro";
+import { SITE } from "../data/site.js";
+import { books } from "../data/books.js";
+
+const featured = books.slice(0, 4);
+const steps = ["Retrieve", "Re-evaluate", "Replenish", "Document", "Celebrate"];
+
+// Hero background slideshow (Ken Burns pan/zoom + crossfade). Files live in /public/images/slides.
+const heroSlides = [
+  { src: "/images/slides/ten.jpg",   x: "-3%", y: "-2%", origin: "50% 40%" },
+  { src: "/images/slides/five.jpg",  x: "3%",  y: "-3%", origin: "40% 50%" },
+  { src: "/images/slides/nine.jpg",  x: "-2%", y: "2%",  origin: "50% 30%" },
+  { src: "/images/slides/three.jpg", x: "3%",  y: "2%",  origin: "50% 60%" },
+  { src: "/images/slides/four.jpg",  x: "-3%", y: "-2%", origin: "60% 50%" },
+  { src: "/images/slides/two.jpg",   x: "2%",  y: "-3%", origin: "50% 45%" },
+];
+
+// Floating gold embers (deterministic so the build is stable).
+const embers = Array.from({ length: 18 }, (_, i) => ({
+  left: (i * 37 + 7) % 100,
+  size: 3 + ((i * 5) % 6),
+  dur: 9 + ((i * 7) % 11),
+  delay: -((i * 3.3) % 14),
+  drift: ((i % 2 ? 1 : -1) * (20 + ((i * 11) % 60))),
+}));
+
+// "Who We Are" image slider.
+const aboutSlides = [
+  { src: "/images/thirteen.jpg", alt: "Archival photograph of three elders", pos: "50% 50%" },
+  { src: "/images/seven.jpg",    alt: "Archival portrait of a woman with a child on her back", pos: "50% 22%" },
+  { src: "/images/eleven.jpg",   alt: "Archival photograph outside a traditional homestead", pos: "50% 50%" },
+  { src: "/images/one.jpg",      alt: "Archival portrait of a woman carrying a bundle of leaves", pos: "50% 25%" },
+];
+
+// "Moments" gallery marquee rows.
+const momentsA = ["ten", "five", "three", "nine", "four"];
+const momentsB = ["seven", "two", "thirteen", "eleven", "one"];
+// Optimized copies live in /images/slides; the archival scans use the originals in /images.
+const optimized = ["ten", "five", "three", "nine", "four", "two"];
+const momentSrc = (n) => (optimized.includes(n) ? `/images/slides/${n}.jpg` : `/images/${n}.jpg`);
+const momentAlt = {
+  ten: "Women in traditional dress singing together",
+  nine: "Women in traditional orange dress standing together",
+  five: "Roasting meat over an open grill",
+  four: "Traditional foods laid out on a table",
+  three: "Community members with arms raised in prayer in a green field",
+  two: "Community members gathered outdoors",
+  seven: "Archival portrait of a woman",
+  one: "Archival portrait of a woman",
+  thirteen: "Archival photograph of three elders",
+  eleven: "Archival photograph outside a homestead",
+};
+---
+
+<Layout title="Home" description="Agìkūyū Women & Men — retrieving, re-evaluating, replenishing, documenting and celebrating Agìkūyū history, heritage, culture and Gìkūyū language.">
+  <section class="home-hero" id="homeHero" data-interval="6500">
+    <div class="hero-slides" aria-hidden="true">
+      {heroSlides.map((sl, i) => (
+        <div class={`hero-slide${i === 0 ? " active" : ""}`} style={`--kb-x:${sl.x};--kb-y:${sl.y};--kb-origin:${sl.origin};`}>
+          <img src={sl.src} alt="" width="1920" height="1080" loading={i === 0 ? "eager" : "lazy"} decoding="async" />
+        </div>
+      ))}
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-glow" aria-hidden="true"><span class="glow g1"></span><span class="glow g2"></span><span class="glow g3"></span></div>
+    <div class="hero-embers" aria-hidden="true">
+      {embers.map((e) => (
+        <span style={`left:${e.left}%;width:${e.size}px;height:${e.size}px;animation-duration:${e.dur}s;animation-delay:${e.delay}s;--drift:${e.drift}px;`}></span>
+      ))}
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">{SITE.name}</p>
+      <h1 class="hero-title">Retrieve. Re-evaluate. Replenish. Document. <em>Celebrate.</em></h1>
+      <p class="hero-sub">Agìkūyū history, heritage, culture and Gìkūyū language.</p>
+      <div class="hero-actions">
+        <a href="/bookshop" class="btn-primary">Explore the Bookshop</a>
+        <a href="/language" class="btn-outline">Learn Gìkūyū</a>
+      </div>
+    </div>
+    <div class="hero-dots" role="tablist" aria-label="Background photo">
+      {heroSlides.map((_, i) => (
+        <button type="button" role="tab" class={i === 0 ? "active" : ""} aria-label={`Show photo ${i + 1}`} aria-selected={i === 0 ? "true" : "false"}></button>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-wrap">
+    <div class="row reveal">
+      <div>
+        <div class="eyebrow">Who We Are</div>
+        <h2 class="row-title">A cultural heritage initiative, <em>founded in 2017</em></h2>
+        <p class="row-desc">
+          Agìkūyū Women and Men is a cultural heritage initiative founded in 2017 and formally registered in 2018
+          with a shared vision: to safeguard the wisdom, traditions, history, language and identity of the Agìkūyū people.
+        </p>
+        <p style="margin-top: 26px;"><a href="/about" class="btn-ghost">Read About Us</a></p>
+      </div>
+      <div class="slider" data-slider data-interval="4500" role="region" aria-roledescription="carousel" aria-label="Archival photographs">
+        <div class="slider-viewport">
+          <div class="slider-track">
+            {aboutSlides.map((sl, i) => (
+              <figure class="slide" aria-roledescription="slide">
+                <img src={sl.src} alt={sl.alt} style={`object-position:${sl.pos};`} width="700" height="520" loading={i === 0 ? "eager" : "lazy"} />
+              </figure>
+            ))}
+          </div>
+        </div>
+        <button type="button" class="slider-btn prev" aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"></polyline></svg></button>
+        <button type="button" class="slider-btn next" aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 5 16 12 9 19"></polyline></svg></button>
+        <div class="slider-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-wrap tight tinted">
+    <div class="eyebrow center" style="justify-content:center;">Our Mission</div>
+    <h2 class="section-title center">Five steps to <em>safeguard our heritage</em></h2>
+    <ol class="steps-strip reveal">
+      {steps.map((s, i) => (
+        <li><span class="step-num">{String(i + 1).padStart(2, "0")}</span><span class="step-name">{s}</span></li>
+      ))}
+    </ol>
+    <p class="section-sub center reveal" style="max-width: 720px;">
+      Our mission is to Retrieve, Re-evaluate, Replenish, Document, and to Celebrate Agìkūyū culture, history,
+      and Gìkūyū language so that current and future generations can understand, honor, and carry forward
+      their heritage with pride.
+    </p>
+  </section>
+
+  <section class="section-wrap">
+    <div class="eyebrow center" style="justify-content:center;">Explore</div>
+    <h2 class="section-title center">Ways to <em>engage with us</em></h2>
+    <div class="grid-4" style="margin-top: 50px;">
+      <article class="card plain reveal">
+        <div class="card-body">
+          <p class="card-tag">Bookshop</p>
+          <h3 class="card-title">Bookshop</h3>
+          <p class="card-desc">Books and publications that contribute to the preservation, study and enjoyment of Agìkūyū and African history, culture, language, religion, literature and indigenous knowledge.</p>
+          <a href="/bookshop" class="btn-ghost card-cta">Visit the Bookshop</a>
+        </div>
+      </article>
+      <article class="card plain reveal d1">
+        <div class="card-body">
+          <p class="card-tag">Research &amp; Heritage</p>
+          <h3 class="card-title">Our Work</h3>
+          <p class="card-desc">The research, documentation, knowledge-sharing, partnerships and cultural initiatives through which we advance our mission.</p>
+          <a href="/our-work" class="btn-ghost card-cta">See Our Work</a>
+        </div>
+      </article>
+      <article class="card plain reveal d2">
+        <div class="card-body">
+          <p class="card-tag">Language</p>
+          <h3 class="card-title">Gìkūyū Language Initiative</h3>
+          <p class="card-desc">Virtual Gìkūyū language classes for adults aged 20 years and above — a structured pathway from beginner to advanced proficiency.</p>
+          <a href="/language" class="btn-ghost card-cta">Learn Gìkūyū</a>
+        </div>
+      </article>
+      <article class="card plain reveal d3">
+        <div class="card-body">
+          <p class="card-tag">Get Involved</p>
+          <h3 class="card-title">Partner With Us</h3>
+          <p class="card-desc">Sponsor our research, donate, or partner with us in the work of preserving and advancing Agìkūyū heritage.</p>
+          <a href="/partner" class="btn-ghost card-cta">Join the Journey</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="moments">
+    <div class="eyebrow center" style="justify-content:center;">Moments</div>
+    <h2 class="section-title light center">Our people, <em>our story</em></h2>
+    <div class="marquee" aria-label="Photo gallery">
+      <div class="marquee-track">
+        {[...momentsA, ...momentsA, ...momentsA, ...momentsA].map((n, i) => (
+          <figure class="moment" aria-hidden={i >= momentsA.length ? "true" : undefined}><img src={momentSrc(n)} alt={i >= momentsA.length ? "" : momentAlt[n]} height="240" decoding="async" /></figure>
+        ))}
+      </div>
+    </div>
+    <div class="marquee reverse" aria-hidden="true">
+      <div class="marquee-track">
+        {[...momentsB, ...momentsB, ...momentsB, ...momentsB].map((n) => (
+          <figure class="moment"><img src={momentSrc(n)} alt="" height="240" decoding="async" /></figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-wrap tinted">
+    <div class="eyebrow center" style="justify-content:center;">From the Bookshop</div>
+    <h2 class="section-title center">Books that carry <em>memory and knowledge</em></h2>
+    <div class="grid-4 books" style="margin-top: 50px;">
+      {featured.map((book, i) => (
+        <a class={`card book-card reveal ${i % 4 === 1 ? "d1" : i % 4 === 2 ? "d2" : i % 4 === 3 ? "d3" : ""}`} href={`/bookshop/${book.id}`}>
+          <BookCover book={book} />
+          <div class="card-body">
+            <h3 class="card-title">{book.title}</h3>
+            <p class="card-author">{book.author}</p>
+            <p class="card-price">Ksh {book.price.toLocaleString("en-US")}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+    <p style="text-align:center; margin-top: 44px;"><a href="/bookshop" class="btn-primary">View All Books</a></p>
+  </section>
+
+  <section class="cta-strip">
+    <p>Have a question, an idea, a research project or an opportunity to collaborate?<br />
+      <a href="/contact">Send us a message</a> &middot; <a href={`tel:${SITE.phone}`}>{SITE.phone}</a> &middot; <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+  </section>
+</Layout>
+
+<script>
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* ---------- hero background slideshow ---------- */
+  const hero = document.getElementById("homeHero");
+  if (hero) {
+    const slides = Array.from(hero.querySelectorAll(".hero-slide"));
+    const dots = Array.from(hero.querySelectorAll(".hero-dots button"));
+    const interval = Number(hero.dataset.interval) || 6500;
+    hero.style.setProperty("--interval", interval + "ms");
+    let idx = 0;
+    let timer;
+
+    const show = (n) => {
+      if (n === idx) return;
+      const prev = slides[idx];
+      prev.classList.remove("active");
+      prev.classList.add("leaving");
+      setTimeout(() => prev.classList.remove("leaving"), 2000);
+      idx = n;
+      slides[idx].classList.add("active");
+      dots.forEach((d, i) => {
+        d.classList.remove("active");
+        d.setAttribute("aria-selected", String(i === idx));
+      });
+      void dots[idx].offsetWidth; // restart the progress-fill animation
+      dots[idx].classList.add("active");
+    };
+    const next = () => show((idx + 1) % slides.length);
+    const start = () => { stop(); if (!reduce.matches) timer = setInterval(next, interval); };
+    const stop = () => clearInterval(timer);
+
+    dots.forEach((d, i) => d.addEventListener("click", () => { show(i); start(); }));
+    document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+    start();
+  }
+
+  /* ---------- content sliders ---------- */
+  document.querySelectorAll("[data-slider]").forEach((root) => {
+    const track = root.querySelector(".slider-track");
+    const slides = Array.from(root.querySelectorAll(".slide"));
+    const dotsWrap = root.querySelector(".slider-dots");
+    const interval = Number(root.dataset.interval) || 5000;
+    let idx = 0;
+    let timer;
+
+    const dots = slides.map((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", `Go to photo ${i + 1}`);
+      b.addEventListener("click", () => { go(i); start(); });
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    const go = (n) => {
+      idx = (n + slides.length) % slides.length;
+      track.style.transform = `translateX(${-idx * 100}%)`;
+      slides.forEach((s, i) => s.classList.toggle("is-current", i === idx));
+      dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+    };
+    const stop = () => clearInterval(timer);
+    const start = () => { stop(); if (!reduce.matches) timer = setInterval(() => go(idx + 1), interval); };
+
+    root.querySelector(".prev").addEventListener("click", () => { go(idx - 1); start(); });
+    root.querySelector(".next").addEventListener("click", () => { go(idx + 1); start(); });
+    root.addEventListener("mouseenter", stop);
+    root.addEventListener("mouseleave", start);
+
+    // swipe
+    let startX = null;
+    root.addEventListener("pointerdown", (e) => { startX = e.clientX; });
+    root.addEventListener("pointerup", (e) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 40) { go(idx + (dx < 0 ? 1 : -1)); start(); }
+    });
+
+    go(0);
+    start();
+  });
+</script>

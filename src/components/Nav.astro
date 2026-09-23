@@ -1,0 +1,91 @@
+---
+import { SITE } from "../data/site.js";
+
+const { solid = false } = Astro.props;
+
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
+  { href: "/bookshop", label: "Bookshop" },
+  { href: "/our-work", label: "Our Work" },
+  { href: "/language", label: "Gìkūyū Language" },
+];
+---
+
+<div class="mm-backdrop" id="mmBackdrop"></div>
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mm-header">
+    <span class="mm-brand">{SITE.name}</span>
+    <button class="mm-close" id="mmClose" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <div class="mm-nav">
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    <a href="/partner" class="mm-cta">Partner With Us</a>
+    <a href="/contact">Contact Us</a>
+  </div>
+</div>
+
+<header id="siteNav" class={solid ? "solid" : undefined}>
+  <a href="/" class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="22" r="21" stroke="#d4a44c" stroke-width="1.2" opacity="0.6"></circle>
+        <path d="M22 8 L33 16 L29 30 L15 30 L11 16 Z" stroke="#d4a44c" stroke-width="1.4" fill="none"></path>
+        <circle cx="22" cy="21" r="4.5" fill="none" stroke="#d4a44c" stroke-width="1" opacity="0.55"></circle>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <span class="brand-name">{SITE.name}</span>
+      <span class="brand-sub">Heritage &middot; Culture &middot; Language</span>
+    </div>
+  </a>
+
+  <nav class="nav-links">
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    <a href="/partner">Partner With Us</a>
+    <a href="/contact" class="nav-cta">Contact Us</a>
+  </nav>
+
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<script>
+  const navbar = document.getElementById("siteNav")!;
+  window.addEventListener("scroll", () => {
+    navbar.classList.toggle("scrolled", window.scrollY > 40);
+  });
+  if (window.scrollY > 40) navbar.classList.add("scrolled");
+
+  const _menu = document.getElementById("mobileMenu")!;
+  const _bd = document.getElementById("mmBackdrop")!;
+  const _hbg = document.getElementById("hamburger")!;
+  const _close = document.getElementById("mmClose")!;
+
+  function closeMobileMenu() {
+    _menu.classList.remove("open");
+    _bd.classList.remove("open");
+    _hbg.classList.remove("is-open");
+    document.body.style.overflow = "";
+  }
+  function openMobileMenu() {
+    _menu.classList.add("open");
+    _bd.classList.add("open");
+    _hbg.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+  _hbg.addEventListener("click", () =>
+    _menu.classList.contains("open") ? closeMobileMenu() : openMobileMenu()
+  );
+  _close.addEventListener("click", closeMobileMenu);
+  _bd.addEventListener("click", closeMobileMenu);
+  document.querySelectorAll(".mm-nav a").forEach((a) => a.addEventListener("click", closeMobileMenu));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMobileMenu();
+  });
+</script>

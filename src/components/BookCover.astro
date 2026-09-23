@@ -1,0 +1,25 @@
+---
+// Shows the book's real cover image if `book.image` is set; otherwise a generated
+// typographic cover so no unrelated photo is ever used as a book cover.
+import { books } from "../data/books.js";
+
+const { book } = Astro.props;
+
+// Colour follows the book's position in the list, so neighbouring covers always differ.
+const tone = Math.max(0, books.findIndex((b) => b.id === book.id)) % 5;
+const len = book.title.length;
+const coverTitle = book.title.replace(/(\d)–(\d)/g, "$1\u2060–\u2060$2"); // no line break inside "1–3"
+const size = len <= 22 ? "lg" : len <= 40 ? "md" : "sm";
+---
+
+{book.image ? (
+  <img class="cover-img" src={book.image} alt={`Cover of ${book.title}`} width="600" height="800" loading="lazy" />
+) : (
+  <div class={`cover tone-${tone}`} role="img" aria-label={`${book.title} by ${book.author}`}>
+    <div class="cover-frame">
+      <span class="cover-orn" aria-hidden="true"></span>
+      <span class={`cover-title ${size}`}>{coverTitle}</span>
+      <span class="cover-author">{book.author}</span>
+    </div>
+  </div>
+)}

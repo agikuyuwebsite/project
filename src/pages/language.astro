@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const levels = [
+  {
+    tag: "Level 1",
+    title: "Beginners",
+    text: "An introductory level for learners with little or no prior knowledge of Gìkūyū. Learners develop foundational vocabulary, expressions, comprehension and basic conversational skills.",
+  },
+  {
+    tag: "Level 2",
+    title: "Intermediate",
+    text: "Builds on the foundation established at Level 1, developing learners' confidence in understanding, speaking and using Gìkūyū in a wider range of everyday conversations and contexts.",
+  },
+  {
+    tag: "Level 3",
+    title: "Advanced",
+    text: "Supports learners in developing more advanced comprehension, conversation and use of Gìkūyū, with greater confidence and fluency.",
+  },
+];
+
+const intakes = [
+  { n: "01", months: "January – April" },
+  { n: "02", months: "May – August" },
+  { n: "03", months: "September – December" },
+];
+---
+
+<Layout title="Gìkūyū Language Initiative" description="Virtual Gìkūyū language classes for adults aged 20 years and above, from beginner to advanced. Three intakes every year.">
+  <section class="page-hero">
+    <img class="hero-img" src="/images/nine.jpg" alt="" width="1600" height="700" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Gìkūyū Language Initiative</p>
+      <h1 class="hero-title">Learning <em>Gìkūyū</em></h1>
+      <p class="hero-sub">Language is one of the most important carriers of culture.</p>
+    </div>
+  </section>
+
+  <section class="section-wrap tight">
+    <div class="prose narrow reveal">
+      <p>
+        Our Gìkūyū Language Initiative provides an opportunity for adults to learn, understand and use Gìkūyū while
+        reconnecting with the cultural knowledge, expressions and worldview carried within the language.
+      </p>
+      <h2 class="prose-h">Gìkūyū Language Classes</h2>
+      <p>
+        We offer virtual Gìkūyū language classes for adults aged 20 years and above, providing a structured pathway
+        from beginner to advanced proficiency.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-wrap tight tinted">
+    <div class="eyebrow center" style="justify-content:center;">The Programme Has 3 Levels</div>
+    <h2 class="section-title center">Gìkūyū Language <em>Levels</em></h2>
+    <p class="section-sub center" style="margin-bottom: 46px;">
+      Our Programme has three progressive levels, beginning with Beginners / Level 1 and progressing to advanced learning.
+    </p>
+    <div class="grid-3">
+      {levels.map((l, i) => (
+        <article class={`card plain reveal ${i === 1 ? "d1" : i === 2 ? "d2" : ""}`}>
+          <div class="card-body">
+            <p class="card-tag">{l.tag}</p>
+            <h3 class="card-title">{l.title}</h3>
+            <p class="card-desc">{l.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-wrap tight">
+    <div class="eyebrow center" style="justify-content:center;">Three Intakes Every Year</div>
+    <h2 class="section-title center">Classes across <em>three semesters</em></h2>
+    <p class="section-sub center" style="margin-bottom: 46px;">Classes are offered across three semesters each year.</p>
+    <div class="grid-3">
+      {intakes.map((t, i) => (
+        <article class={`card plain intake reveal ${i === 1 ? "d1" : i === 2 ? "d2" : ""}`}>
+          <div class="card-body" style="align-items:center; text-align:center;">
+            <p class="card-tag">Semester {t.n}</p>
+            <h3 class="card-title">{t.months}</h3>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="section-sub center reveal" style="margin-top: 40px; max-width: 640px;">
+      Learners can join the Programme according to the level appropriate to their existing knowledge of Gìkūyū.
+    </p>
+  </section>
+
+  <section class="section-wrap tight tinted">
+    <div class="prose narrow reveal">
+      <div class="eyebrow">Learn from Wherever You Are</div>
+      <p>
+        Classes are offered virtually, making the Programme accessible to learners regardless of where they live.
+      </p>
+      <p>
+        The classes combine language learning with cultural context, helping learners not only to acquire vocabulary and
+        expressions but also to appreciate the cultural meanings carried through the Gìkūyū language.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-wrap tight" id="current-intake">
+    <div class="callout reveal">
+      <div class="eyebrow" style="color: var(--gold-lt);">Current Intake</div>
+      <h2 class="callout-title">Next intake is <em>January to April 2027</em></h2>
+      <p>
+        Information about the current intake, registration dates, class schedule, fees and how to enroll is available
+        through our Programme announcements.
+      </p>
+      <p>
+        Interested in learning Gìkūyū? Join our next intake and begin your journey from beginner to advanced.
+      </p>
+      <p style="margin-top: 28px;"><a href="/contact?topic=language" class="btn-primary">Enquire About the Next Intake</a></p>
+    </div>
+  </section>
+</Layout>

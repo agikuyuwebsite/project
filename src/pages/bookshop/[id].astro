@@ -1,0 +1,71 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BookCover from "../../components/BookCover.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { books } from "../../data/books.js";
+
+export function getStaticPaths() {
+  return books.map((book, i) => ({ params: { id: book.id }, props: { book, index: i } }));
+}
+
+const { book, index } = Astro.props;
+const price = `Ksh ${book.price.toLocaleString("en-US")}`;
+const more = [1, 2, 3, 4].map((n) => books[(index + n) % books.length]);
+---
+
+<Layout title={book.title} description={book.description} solidNav>
+  <section class="section-wrap tight book-detail-wrap">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/bookshop">Bookshop</a> <span aria-hidden="true">/</span> <span>{book.title}</span>
+    </nav>
+
+    <div class="book-detail">
+      <div class="book-detail-cover">
+        <BookCover book={book} />
+      </div>
+
+      <div class="book-detail-info">
+        <p class="card-tag">Bookshop</p>
+        <h1 class="book-detail-title">{book.title}</h1>
+        <p class="book-detail-author">by {book.author}</p>
+        <p class="book-detail-price">{price}</p>
+
+        <p class="book-detail-desc">{book.description}</p>
+
+        <dl class="book-meta">
+          <div><dt>Author</dt><dd>{book.author}</dd></div>
+          {book.format && <div><dt>Format</dt><dd>{book.format}</dd></div>}
+          <div><dt>Price</dt><dd>{price}</dd></div>
+        </dl>
+
+        <div class="buy-box">
+          <p class="buy-note"><strong>Payment options:</strong> M-Pesa and Visa card.</p>
+          <WhatsAppButton
+            label="Order via WhatsApp"
+            message={`Hello! I'd like to order "${book.title}" by ${book.author} (${price}).`}
+          />
+          <p class="buy-note small">We will confirm your order and arrange payment and delivery.</p>
+        </div>
+
+        <p style="margin-top: 26px;"><a href="/bookshop#collection" class="btn-ghost">&larr; Back to the Bookshop</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-wrap tight tinted">
+    <div class="eyebrow center" style="justify-content:center;">More Books</div>
+    <h2 class="section-title center">Continue <em>browsing</em></h2>
+    <div class="grid-4 books" style="margin-top: 44px;">
+      {more.map((b) => (
+        <a class="card book-card" href={`/bookshop/${b.id}`}>
+          <BookCover book={b} />
+          <div class="card-body">
+            <h3 class="card-title">{b.title}</h3>
+            <p class="card-author">{b.author}</p>
+            <p class="card-price">Ksh {b.price.toLocaleString("en-US")}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

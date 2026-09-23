@@ -1,0 +1,86 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import BookCover from "../../components/BookCover.astro";
+import { books } from "../../data/books.js";
+
+const findList = [
+  "Gìkūyū language and learning materials",
+  "Gìkūyū oral literature and folktales",
+  "Proverbs and traditional wisdom",
+  "Agìkūyū history and ethnography",
+  "African religion and spirituality",
+  "Indigenous knowledge",
+  "African history and civilization",
+  "Literature and creative works",
+  "Cultural and heritage publications",
+];
+---
+
+<Layout title="Bookshop" description="Books and publications on Agìkūyū and African history, culture, language, religion, literature and indigenous knowledge.">
+  <section class="page-hero">
+    <img class="hero-img" src="/images/four.jpg" alt="" width="1600" height="700" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Bookshop</p>
+      <h1 class="hero-title">Our <em>Bookshop</em></h1>
+    </div>
+  </section>
+
+  <section class="section-wrap tight">
+    <div class="split">
+      <div class="prose reveal">
+        <p>
+          Our Bookshop brings together books and publications that contribute to the preservation, study and enjoyment
+          of Agìkūyū and African history, culture, language, religion, literature and indigenous knowledge.
+        </p>
+        <p>
+          The collection includes works on Gìkūyū language and oral literature, history, traditions, spirituality,
+          proverbs, storytelling, cultural knowledge and broader African thought.
+        </p>
+        <p>
+          These books are more than reading materials. They are repositories of memory, knowledge and ideas that allow
+          readers to encounter African intellectual and cultural traditions across generations.
+        </p>
+      </div>
+      <aside class="panel reveal d1">
+        <h2 class="panel-title">What You Can Find</h2>
+        <ul class="checklist">
+          {findList.map((item) => <li>{item}</li>)}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section-wrap" style="padding-top: 20px;" id="collection">
+    <div class="eyebrow center" style="justify-content:center;">The Collection</div>
+    <h2 class="section-title center">{books.length} titles <em>in our collection</em></h2>
+    <div class="grid-4 books" style="margin-top: 50px;">
+      {books.map((book, i) => (
+        <a class={`card book-card reveal ${i % 4 === 1 ? "d1" : i % 4 === 2 ? "d2" : i % 4 === 3 ? "d3" : ""}`} href={`/bookshop/${book.id}`} data-book-id={book.id}>
+          <BookCover book={book} />
+          <div class="card-body">
+            <h3 class="card-title">{book.title}</h3>
+            <p class="card-author">{book.author}</p>
+            <p class="card-desc">{book.description}</p>
+            <p class="card-price">Ksh {book.price.toLocaleString("en-US")}</p>
+            <span class="card-more">View book &rarr;</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-wrap tight tinted">
+    <div class="panel wide reveal">
+      <h2 class="panel-title">How to Purchase</h2>
+      <p>
+        Books available in our collection can be ordered directly through the website. Open a book's page and place
+        your order, and we will confirm it with you and arrange payment and delivery.
+      </p>
+      <p><strong>Payment options:</strong> M-Pesa and Visa card.</p>
+      <p>
+        Each book has its own product page with information about the title, author, description and price.
+      </p>
+    </div>
+  </section>
+</Layout>

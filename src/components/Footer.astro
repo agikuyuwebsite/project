@@ -1,0 +1,52 @@
+---
+import { SITE } from "../data/site.js";
+---
+
+<footer id="siteFooter">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-brand-name">{SITE.name}</div>
+        <p class="footer-brand-text">{SITE.tagline}</p>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Quick Links</div>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/bookshop">Bookshop</a></li>
+          <li><a href="/our-work">Our Work</a></li>
+          <li><a href="/language">Gìkūyū Language Initiative</a></li>
+          <li><a href="/partner">Partner With Us</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <p>{SITE.contactPerson.name}</p>
+        <p>{SITE.contactPerson.role}</p>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+        <p><a href={`tel:${SITE.phone}`}>{SITE.phone}</a></p>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">Follow Us</div>
+        <ul class="footer-social-list">
+          {SITE.social.map((s) => (
+            <li>
+              <span class="fs-label">{s.label}</span>
+              {s.url
+                ? <a href={s.url} target="_blank" rel="noopener noreferrer">{s.handle}</a>
+                : <span class="fs-handle">{s.handle}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; {new Date().getFullYear()} {SITE.name}. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
