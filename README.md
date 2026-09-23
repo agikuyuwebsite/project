@@ -46,3 +46,4 @@ npm run build    # static site in dist/
 - `public/images/one.jpg` and `eight.jpg` are identical files.
 - Photos `fourteen.jpg`, `fifteen.jpg` and `sixteen.jpg` are stored sideways and are not used.
 - `two.jpg` and `three.jpg` are ~5 MB each and are not used; resize before using them on a page.
+"# project" 
