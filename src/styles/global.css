@@ -537,13 +537,13 @@ a.card.book-card { text-decoration: none; color: inherit; }
 @keyframes glowDrift2 { to { transform: translate(-16vw, -10vw) scale(1.2); } }
 @keyframes glowDrift3 { to { transform: translate(-14vw, 10vw) scale(0.8); } }
 
-/* rising embers */
-.hero-embers { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-.hero-embers span { position: absolute; bottom: -20px; border-radius: 50%; background: radial-gradient(circle, #fff3cf 0%, var(--gold-lt) 45%, transparent 72%); opacity: 0; animation: emberRise linear infinite; }
+/* rising traditional motifs (shields & pots) */
+.hero-motifs { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.hero-motifs svg { position: absolute; bottom: -30px; fill: var(--gold-lt); opacity: 0; animation: emberRise linear infinite; filter: drop-shadow(0 0 5px rgba(212,164,76,0.55)); }
 @keyframes emberRise {
-  0%   { transform: translate(0, 0) scale(0.6); opacity: 0; }
-  12%  { opacity: 0.9; }
-  100% { transform: translate(var(--drift, 30px), -105vh) scale(1.1); opacity: 0; }
+  0%   { transform: translate(0, 0) scale(0.6) rotate(0deg); opacity: 0; }
+  12%  { opacity: 0.85; }
+  100% { transform: translate(var(--drift, 30px), -105vh) scale(1.1) rotate(6deg); opacity: 0; }
 }
 
 /* staggered text entrance */
@@ -614,8 +614,8 @@ a.card.book-card { text-decoration: none; color: inherit; }
 
 /* ---------- respect reduced-motion preferences ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .hero-slide.active img, .hero-slide.leaving img, .hero-glow .glow, .hero-embers span, .home-hero .hero-title em, .marquee-track { animation: none !important; }
-  .hero-embers { display: none; }
+  .hero-slide.active img, .hero-slide.leaving img, .hero-glow .glow, .hero-motifs svg, .home-hero .hero-title em, .marquee-track { animation: none !important; }
+  .hero-motifs { display: none; }
   .home-hero .hero-eyebrow, .home-hero .hero-title, .home-hero .hero-sub, .home-hero .hero-actions { animation: none; opacity: 1; }
   .hero-slide, .slider-track { transition-duration: 0.01s; }
   .marquee { overflow-x: auto; }

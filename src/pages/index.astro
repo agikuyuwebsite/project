@@ -17,14 +17,22 @@ const heroSlides = [
   { src: "/images/slides/two.jpg",   x: "2%",  y: "-3%", origin: "50% 45%" },
 ];
 
-// Floating gold embers (deterministic so the build is stable).
-const embers = Array.from({ length: 18 }, (_, i) => ({
+// Rising traditional motifs — alternating shield ("guard") and clay-pot silhouettes drifting
+// upward through the hero, in place of plain glowing dots. Deterministic so the build is stable.
+const heroMotifs = Array.from({ length: 14 }, (_, i) => ({
   left: (i * 37 + 7) % 100,
-  size: 3 + ((i * 5) % 6),
-  dur: 9 + ((i * 7) % 11),
+  size: 16 + ((i * 5) % 14),
+  dur: 13 + ((i * 7) % 11),
   delay: -((i * 3.3) % 14),
   drift: ((i % 2 ? 1 : -1) * (20 + ((i * 11) % 60))),
+  kind: i % 2 === 0 ? "pot" : "shield",
 }));
+
+// Simple flat silhouette icons for the rising motifs above.
+const motifPaths = {
+  pot: "M9 2.2h6l-.6 3.4c2.3.9 3.9 3.3 3.9 6.6 0 4.9-3.1 9.6-6.3 9.6s-6.3-4.7-6.3-9.6c0-3.3 1.6-5.7 3.9-6.6L9 2.2z",
+  shield: "M12 1.6l7.4 2.9v6.2c0 5.3-3.1 9.7-7.4 11.7-4.3-2-7.4-6.4-7.4-11.7V4.5L12 1.6z",
+};
 
 // "Who We Are" image slider.
 const aboutSlides = [
@@ -65,9 +73,12 @@ const momentAlt = {
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-glow" aria-hidden="true"><span class="glow g1"></span><span class="glow g2"></span><span class="glow g3"></span></div>
-    <div class="hero-embers" aria-hidden="true">
-      {embers.map((e) => (
-        <span style={`left:${e.left}%;width:${e.size}px;height:${e.size}px;animation-duration:${e.dur}s;animation-delay:${e.delay}s;--drift:${e.drift}px;`}></span>
+    <div class="hero-motifs" aria-hidden="true">
+      {heroMotifs.map((m) => (
+        <svg
+          viewBox="0 0 24 24"
+          style={`left:${m.left}%;width:${m.size}px;height:${m.size}px;animation-duration:${m.dur}s;animation-delay:${m.delay}s;--drift:${m.drift}px;`}
+        ><path d={motifPaths[m.kind]} /></svg>
       ))}
     </div>
     <div class="hero-content">
