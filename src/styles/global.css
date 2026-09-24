@@ -397,7 +397,7 @@ a[data-whatsapp-cta]:hover { transform: translateY(-1px); opacity: 0.9; }
 .card.intake .card-title { font-size: 28px; }
 
 /* ---------- book covers & cards ---------- */
-.cover-img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.cover-img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: linear-gradient(160deg, #3d2a1a, #2b1c12); }
 .cover { container-type: inline-size; position: relative; overflow: hidden; width: 100%; aspect-ratio: 3 / 4; }
 .cover-frame { position: absolute; inset: 5cqw; border: 1px solid rgba(245,228,184,0.5); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8cqw 7cqw; gap: 6cqw; }
 .cover-orn { display: block; position: relative; width: 16cqw; height: 1px; background: var(--gold-lt); flex-shrink: 0; }
