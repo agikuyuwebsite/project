@@ -13,7 +13,9 @@ const size = len <= 22 ? "lg" : len <= 40 ? "md" : "sm";
 ---
 
 {book.image ? (
-  <img class="cover-img" src={book.image} alt={`Cover of ${book.title}`} width="600" height="800" loading="lazy" />
+  <div class="cover cover-photo" role="img" aria-label={`Cover of ${book.title}`}>
+    <img class="cover-img" src={book.image} alt={`Cover of ${book.title}`} width="600" height="800" loading="lazy" />
+  </div>
 ) : (
   <div class={`cover tone-${tone}`} role="img" aria-label={`${book.title} by ${book.author}`}>
     <div class="cover-frame">

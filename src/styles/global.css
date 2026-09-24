@@ -397,8 +397,30 @@ a[data-whatsapp-cta]:hover { transform: translateY(-1px); opacity: 0.9; }
 .card.intake .card-title { font-size: 28px; }
 
 /* ---------- book covers & cards ---------- */
-.cover-img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: linear-gradient(160deg, #3d2a1a, #2b1c12); }
 .cover { container-type: inline-size; position: relative; overflow: hidden; width: 100%; aspect-ratio: 3 / 4; }
+.cover-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8cqw;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 8%, rgba(212,164,76,0.12) 0%, transparent 60%),
+    linear-gradient(160deg, #f6efe1 0%, #ece0c8 100%);
+  box-shadow: inset 0 0 0 1px rgba(184,132,42,0.14);
+}
+.cover-photo .cover-img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: none;
+  box-shadow: 0 10px 24px rgba(43,28,18,0.28), 0 2px 6px rgba(43,28,18,0.18);
+  border-radius: 2px;
+  transition: transform 0.45s cubic-bezier(.2,.7,.2,1);
+}
+.card:hover .cover-photo .cover-img, a:hover .cover-photo .cover-img { transform: scale(1.045); }
+.cover-img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: contain; }
 .cover-frame { position: absolute; inset: 5cqw; border: 1px solid rgba(245,228,184,0.5); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8cqw 7cqw; gap: 6cqw; }
 .cover-orn { display: block; position: relative; width: 16cqw; height: 1px; background: var(--gold-lt); flex-shrink: 0; }
 .cover-orn::before { content: ''; position: absolute; left: 50%; top: 50%; width: 2.4cqw; height: 2.4cqw; background: var(--gold-lt); transform: translate(-50%, -50%) rotate(45deg); }
