@@ -6,7 +6,10 @@ export const SITE = {
   // One number for calls and WhatsApp.
   phone: "+254790224189",
   whatsappNumber: "254790224189", // digits only (no "+"), used for wa.me links
-  email: "gikuyuandmumbiwomen@gmail.com",
+  email: "info@agikuyuwomenandmen.co.ke",
+
+  // Mpesa Buy Goods / Till number for direct donations.
+  mpesaTill: "507969",
 
   contactPerson: {
     name: "Wambūi MN",
@@ -17,10 +20,10 @@ export const SITE = {
   // `url` is left empty where the real link is not known yet — those entries show as
   // plain text. Paste the full profile URL to turn them into links everywhere.
   social: [
-    { id: "facebook",  label: "Facebook",  short: "FB", handle: "Gìkūyū and Mūmbi Women & Men", url: "" },
-    { id: "twitter",   label: "Twitter",   short: "TW", handle: "@AgikuyuWomen",                url: "https://twitter.com/AgikuyuWomen" },
-    { id: "instagram", label: "Instagram", short: "IG", handle: "AgìkūyūWomen",                 url: "" },
-    { id: "youtube",   label: "YouTube",   short: "YT", handle: "Gìkūyū and Mūmbi Women",       url: "" },
+    { id: "facebook",  label: "Facebook",  short: "FB", handle: "Gìkūyū and Mūmbi Women & Men", url: "https://www.facebook.com/AgikuyuWomen/" },
+    { id: "twitter",   label: "Twitter",   short: "TW", handle: "@AgikuyuWomen",                url: "https://x.com/AgikuyuWomen" },
+    { id: "instagram", label: "Instagram", short: "IG", handle: "AgìkūyūWomen",                 url: "https://www.instagram.com/agikuyuwomen/" },
+    { id: "youtube",   label: "YouTube",   short: "YT", handle: "Gìkūyū and Mūmbi Women",       url: "https://www.youtube.com/@gikuyuandmumbiwomen4058" },
   ],
 };
 
