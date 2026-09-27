@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { SITE } from "../data/site.js";
 
 const ways = [
   {
@@ -21,6 +22,7 @@ const ways = [
       "Donations may support research, oral history documentation, language resources, publications, educational materials, cultural programmes, digital preservation and community initiatives.",
       "Whether large or small, every contribution helps sustain this work and make cultural knowledge more accessible to future generations.",
     ],
+    extra: `You can donate directly via Lipa na M-PESA, Buy Goods Till Number <strong>${SITE.mpesaTill}</strong>. For bank transfer details, please get in touch with us.`,
   },
   {
     title: "Partner with Us",
@@ -68,6 +70,7 @@ const ways = [
           <div class="card-body">
             <h2 class="card-title way-title">{w.title}</h2>
             {w.paras.map((p) => <p class="card-desc">{p}</p>)}
+            {w.extra && <p class="card-desc" set:html={w.extra} />}
             <a href={`/contact?topic=${w.topic}`} class="btn-primary card-cta" style="padding: 13px 26px;">{w.cta}</a>
           </div>
         </article>
