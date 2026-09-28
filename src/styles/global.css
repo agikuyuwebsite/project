@@ -66,37 +66,40 @@ main { display: block; overflow-x: hidden; }
 .btn-sm-gold:hover { opacity: 0.88; transform: translateY(-1px); }
 
 /* ---------- nav ---------- */
-header#siteNav { position: fixed; top: 0; left: 0; right: 0; max-width: 100vw; box-sizing: border-box; z-index: 100; padding: 18px 60px; display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: background 0.4s, padding 0.4s, box-shadow 0.4s; background: rgba(43,28,18,0.0); }
-/* Soft permanent scrim behind the unscrolled nav so links stay readable no matter
-   what a given hero photo looks like behind them (light sky, pale trees, etc). */
-header#siteNav::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 170px; pointer-events: none; z-index: -1; background: linear-gradient(to bottom, rgba(15,9,4,0.55) 0%, rgba(15,9,4,0.28) 55%, rgba(15,9,4,0) 100%); opacity: 1; transition: opacity 0.4s; }
-header#siteNav.scrolled::before { opacity: 0; }
-header#siteNav.scrolled { background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 12px 60px; box-shadow: 0 2px 24px rgba(50,40,20,0.09); border-bottom: 1px solid var(--card-border); }
-header#siteNav.solid { background: var(--navy); padding: 14px 60px; }
-header#siteNav.solid::before { display: none; }
-header#siteNav.solid.scrolled { background: rgba(255,255,255,0.96); }
+/* The nav swaps between two themes depending on what is behind it (set by the script in Nav.astro):
+     .nav-dark  -> over dark/photo sections: deep dark bar, bold white text
+     .nav-light -> over light sections: white bar, bold near-black text
+   Both themes always have a solid-ish bar, so links are readable on any background. */
+header#siteNav { position: fixed; top: 0; left: 0; right: 0; max-width: 100vw; box-sizing: border-box; z-index: 100; padding: 18px 60px; display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: background 0.35s, padding 0.4s, box-shadow 0.35s, border-color 0.35s; background: rgba(16,9,4,0.90); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.08); box-shadow: 0 2px 20px rgba(0,0,0,0.35); }
+header#siteNav::before { display: none; }
+header#siteNav.scrolled { padding: 12px 60px; }
+header#siteNav.solid { background: rgba(16,9,4,0.96); padding: 14px 60px; }
+header#siteNav.nav-light { background: rgba(255,255,255,0.97); border-bottom-color: var(--card-border); box-shadow: 0 2px 24px rgba(50,40,20,0.12); }
+header#siteNav.nav-dark { background: rgba(16,9,4,0.90); border-bottom-color: rgba(255,255,255,0.08); box-shadow: 0 2px 20px rgba(0,0,0,0.35); }
+header#siteNav.solid.nav-dark { background: rgba(16,9,4,0.96); }
+header#siteNav.nav-light .brand-name { color: #1a0f06; text-shadow: none; }
+header#siteNav.nav-light .brand-sub { color: var(--text-mid); font-weight: 600; text-shadow: none; }
+header#siteNav.nav-light nav.nav-links a { color: #1a0f06; text-shadow: none; font-weight: 700; }
+header#siteNav.nav-light nav.nav-links a:hover { color: var(--gold); }
+header#siteNav.nav-light nav.nav-links a.nav-cta { color: #fff !important; }
+header#siteNav.nav-light .hamburger { border-color: rgba(26,15,6,0.35); }
+header#siteNav.nav-light .hamburger span { background: #1a0f06; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; flex: 1 1 auto; overflow: hidden; }
 .brand-mark { width: 40px; height: 40px; flex-shrink: 0; }
 .brand-mark svg { width: 100%; height: 100%; }
 .brand-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; overflow: hidden; }
-.brand-name { font-family: 'Cinzel', serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.5); transition: color 0.4s, text-shadow 0.4s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-header#siteNav.scrolled .brand-name { color: var(--navy); text-shadow: none; }
-.brand-sub { font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.75); text-shadow: 0 1px 4px rgba(0,0,0,0.5); margin-top: 3px; transition: color 0.4s, text-shadow 0.4s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-header#siteNav.scrolled .brand-sub { color: var(--text-dim); text-shadow: none; }
+.brand-name { font-family: 'Cinzel', serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; text-shadow: none; transition: color 0.4s, text-shadow 0.4s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brand-sub { font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.92); font-weight: 600; text-shadow: none; margin-top: 3px; transition: color 0.4s, text-shadow 0.4s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 nav.nav-links { display: flex; align-items: center; gap: 24px; list-style: none; }
-nav.nav-links a { font-family: 'Cinzel', serif; font-size: 10px; font-weight: 600; letter-spacing: 0.11em; text-transform: uppercase; color: #ffffff; text-shadow: 0 1px 6px rgba(0,0,0,0.85), 0 0 2px rgba(0,0,0,0.6); text-decoration: none; transition: color 0.3s, text-shadow 0.3s; position: relative; white-space: nowrap; }
+nav.nav-links a { font-family: 'Cinzel', serif; font-size: 10.5px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #ffffff; text-shadow: none; text-decoration: none; transition: color 0.3s, text-shadow 0.3s; position: relative; white-space: nowrap; }
 nav.nav-links a:hover { color: var(--gold-lt); }
 nav.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--gold-lt); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
 nav.nav-links a:hover::after { transform: scaleX(1); }
-header#siteNav.scrolled nav.nav-links a { color: var(--navy); text-shadow: none; font-weight: 600; }
-header#siteNav.scrolled nav.nav-links a:hover { color: var(--gold); }
 nav.nav-links a.nav-cta { font-weight: 600; background: linear-gradient(135deg, var(--gold-lt), var(--gold)); color: #fff !important; text-shadow: none; padding: 9px 18px; border-radius: 3px; box-shadow: var(--shadow-gold); }
 nav.nav-links a.nav-cta::after { display: none; }
-.hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; background: none; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 9px 11px; width: 44px; height: 38px; position: relative; z-index: 99; transition: border-color 0.3s; flex-shrink: 0; margin-left: auto; }
-header#siteNav.scrolled .hamburger { border-color: var(--card-border); }
+.hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; background: none; border: 1px solid rgba(255,255,255,0.55); border-radius: 4px; padding: 9px 11px; width: 44px; height: 38px; position: relative; z-index: 99; transition: border-color 0.3s; flex-shrink: 0; margin-left: auto; }
 .hamburger:hover { border-color: var(--gold-lt); }
 .hamburger span { display: block; width: 22px; height: 2px; border-radius: 2px; background: #fff; transition: transform 0.35s, opacity 0.25s, background 0.4s; transform-origin: center; }
-header#siteNav.scrolled .hamburger span { background: var(--navy); }
 .hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
