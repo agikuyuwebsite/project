@@ -572,12 +572,21 @@ a.card.book-card { text-decoration: none; color: inherit; }
 
 /* rising traditional motifs (shields & pots) */
 .hero-motifs { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-.hero-motifs svg { position: absolute; bottom: -30px; fill: var(--gold-lt); opacity: 0; animation: emberRise linear infinite; filter: drop-shadow(0 0 5px rgba(212,164,76,0.55)); }
-@keyframes emberRise {
-  0%   { transform: translate(0, 0) scale(0.6) rotate(0deg); opacity: 0; }
-  12%  { opacity: 0.85; }
-  100% { transform: translate(var(--drift, 30px), -105vh) scale(1.1) rotate(6deg); opacity: 0; }
+.hero-motifs { --k: 1; }
+.hero-motifs img {
+  position: absolute; bottom: -200px; opacity: 0; max-width: none;
+  width: calc(var(--w) * var(--k) * 1px); height: calc(var(--h) * var(--k) * 1px);
+  animation: emberRise linear infinite;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.45));
 }
+@keyframes emberRise {
+  0%   { transform: translate(0, 0) scale(0.7) rotate(var(--tilt, 0deg)); opacity: 0; }
+  10%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translate(var(--drift, 30px), -120vh) scale(1) rotate(calc(var(--tilt, 0deg) + var(--spin, 12deg))); opacity: 0; }
+}
+@media (max-width: 700px) { .hero-motifs { --k: 0.55; } }
 
 /* staggered text entrance */
 .home-hero .hero-eyebrow, .home-hero .hero-title, .home-hero .hero-sub, .home-hero .hero-actions { opacity: 0; animation: heroRise 1s cubic-bezier(.2,.7,.2,1) forwards; }
@@ -647,7 +656,7 @@ a.card.book-card { text-decoration: none; color: inherit; }
 
 /* ---------- respect reduced-motion preferences ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .hero-slide.active img, .hero-slide.leaving img, .hero-glow .glow, .hero-motifs svg, .home-hero .hero-title em, .marquee-track { animation: none !important; }
+  .hero-slide.active img, .hero-slide.leaving img, .hero-glow .glow, .hero-motifs img, .home-hero .hero-title em, .marquee-track { animation: none !important; }
   .hero-motifs { display: none; }
   .home-hero .hero-eyebrow, .home-hero .hero-title, .home-hero .hero-sub, .home-hero .hero-actions { animation: none; opacity: 1; }
   .hero-slide, .slider-track { transition-duration: 0.01s; }
