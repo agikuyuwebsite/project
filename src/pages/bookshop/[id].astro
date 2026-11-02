@@ -11,9 +11,18 @@ export function getStaticPaths() {
 const { book, index } = Astro.props;
 const price = `Ksh ${book.price.toLocaleString("en-US")}`;
 const more = [1, 2, 3, 4].map((n) => books[(index + n) % books.length]);
+const bookLd = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+  name: book.title,
+  author: { "@type": "Person", name: book.author },
+  description: book.description,
+  ...(book.image ? { image: new URL(book.image, Astro.site).href } : {}),
+  offers: { "@type": "Offer", price: String(book.price), priceCurrency: "KES", availability: "https://schema.org/InStock" },
+};
 ---
 
-<Layout title={book.title} description={book.description} solidNav>
+<Layout title={`${book.title} by ${book.author}`} description={book.description} image={book.image || undefined} jsonLd={[bookLd]} solidNav>
   <section class="section-wrap tight book-detail-wrap">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/bookshop">Bookshop</a> <span aria-hidden="true">/</span> <span>{book.title}</span>

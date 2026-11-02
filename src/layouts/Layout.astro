@@ -2,10 +2,52 @@
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import ContactFab from "../components/ContactFab.astro";
-import { SITE } from "../data/site.js";
+import PromoPopup from "../components/PromoPopup.astro";
+import { SITE, SEO_KEYWORDS } from "../data/site.js";
 import "../styles/global.css";
 
-const { title, description, solidNav = false } = Astro.props;
+const {
+  title,
+  rawTitle, // full <title> override (used on the home page)
+  description,
+  solidNav = false,
+  image = SITE.defaultImage,
+  jsonLd = [], // extra structured data for a page (array of objects)
+  noindex = false,
+} = Astro.props;
+
+const pageTitle = rawTitle || (title ? `${title} | ${SITE.name}` : SITE.name);
+const pageDesc = description || SITE.tagline;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImage = new URL(image, SITE.url).href;
+
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE.url}/#organization`,
+  name: SITE.name,
+  alternateName: ["Agikuyu Women and Men", "Gìkūyū and Mūmbi Women & Men"],
+  url: SITE.url,
+  logo: new URL(SITE.logo, SITE.url).href,
+  image: new URL(SITE.logo, SITE.url).href,
+  description:
+    "A cultural heritage initiative documenting and preserving Agìkūyū (Kikuyu) culture, history, traditions, oral history, indigenous knowledge and the Gìkūyū language.",
+  foundingDate: "2017",
+  email: SITE.email,
+  telephone: SITE.phone,
+  areaServed: "Worldwide",
+  knowsAbout: SEO_KEYWORDS,
+  sameAs: SITE.social.filter((x) => x.url).map((x) => x.url),
+};
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE.name,
+  url: SITE.url,
+  inLanguage: "en",
+  publisher: { "@id": `${SITE.url}/#organization` },
+};
+const graph = [organization, website, ...jsonLd];
 ---
 
 <!doctype html>
@@ -13,8 +55,33 @@ const { title, description, solidNav = false } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title ? `${title} | ${SITE.name}` : SITE.name}</title>
-    <meta name="description" content={description || SITE.tagline} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <meta name="keywords" content={SEO_KEYWORDS.join(", ")} />
+    <meta name="author" content={SITE.name} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#2b1c12" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_KE" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
@@ -26,6 +93,7 @@ const { title, description, solidNav = false } = Astro.props;
     </main>
     <Footer />
     <ContactFab />
+    <PromoPopup />
 
     <script>
       const revealObs = new IntersectionObserver(

@@ -1,0 +1,97 @@
+---
+// Floating promo: opens centered under the nav -> close #1 docks it at the bottom -> close #2 removes it.
+// No storage is used, so the whole cycle repeats on every page load / reload.
+const IMG = "/images/promo-gikuyu-classes.jpg";
+---
+
+<div class="promo" id="promo" role="dialog" aria-label="Online Gìkūyū language classes for adults" hidden>
+  <a href="/language" class="promo-link">
+    <img src={IMG} alt="Online Gìkūyū Language classes for adults. January to April 2027, Wednesdays 7pm Kenyan time. Registration closes 21st December 2026." width="1054" height="1492" />
+  </a>
+  <button class="promo-close" id="promoClose" type="button" aria-label="Close promo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+</div>
+
+<style is:global>
+  .promo {
+    --ratio: 1492 / 1054;
+    position: fixed;
+    left: 50%;
+    z-index: 2147483000; /* above everything */
+    width: var(--promo-w, 420px);
+    aspect-ratio: 1054 / 1492;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    box-shadow: 0 18px 60px rgba(20, 10, 4, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.25);
+    opacity: 0;
+    transition: top 0.7s cubic-bezier(0.65, 0, 0.35, 1), width 0.7s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.45s ease, transform 0.45s ease;
+  }
+  .promo[hidden] { display: none; }
+  .promo.is-in { opacity: 1; }
+  .promo.is-out { opacity: 0; transform: translateX(-50%) translateY(40px); }
+  .promo-link { display: block; width: 100%; height: 100%; border-radius: inherit; overflow: hidden; }
+  .promo-link img { width: 100%; height: 100%; object-fit: cover; }
+  .promo-close {
+    position: absolute; top: -12px; right: -12px;
+    width: 34px; height: 34px; border-radius: 50%;
+    display: grid; place-items: center; cursor: pointer;
+    background: #2b1c12; color: #fff; border: 2px solid var(--gold-lt, #d4a44c);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s, background 0.2s;
+  }
+  .promo-close:hover { transform: scale(1.1); background: var(--terracotta, #a8502e); }
+  .promo-close svg { width: 16px; height: 16px; }
+  .promo.is-docked .promo-close { width: 28px; height: 28px; top: -10px; right: -10px; }
+  .promo.is-docked .promo-close svg { width: 13px; height: 13px; }
+  @media (prefers-reduced-motion: reduce) { .promo { transition: opacity 0.2s; } }
+</style>
+
+<script>
+  const promo = document.getElementById("promo")!;
+  const closeBtn = document.getElementById("promoClose")!;
+  const nav = document.getElementById("siteNav");
+  const RATIO = 1492 / 1054;
+  const GAP = 14;
+  const DOCK_W = 96;
+  let state: "open" | "docked" | "gone" = "open";
+
+  function layout() {
+    if (state === "gone") return;
+    const navH = nav ? nav.offsetHeight : 76;
+    if (state === "open") {
+      // Fit under the nav without overflowing the viewport height or width.
+      const maxH = window.innerHeight - navH - GAP * 2;
+      const w = Math.min(420, window.innerWidth - 32, maxH / RATIO);
+      promo.style.setProperty("--promo-w", w + "px");
+      promo.style.top = navH + GAP + "px";
+    } else {
+      promo.style.setProperty("--promo-w", DOCK_W + "px");
+      promo.style.top = window.innerHeight - DOCK_W * RATIO - 10 + "px";
+    }
+  }
+
+  layout();
+  promo.hidden = false;
+  requestAnimationFrame(() => requestAnimationFrame(() => promo.classList.add("is-in")));
+  window.addEventListener("resize", layout);
+
+  function advance() {
+    if (state === "open") {
+      state = "docked";
+      promo.classList.add("is-docked");
+      closeBtn.setAttribute("aria-label", "Dismiss promo");
+      layout();
+    } else if (state === "docked") {
+      state = "gone";
+      promo.classList.add("is-out");
+      setTimeout(() => promo.remove(), 500);
+    }
+  }
+  closeBtn.addEventListener("click", advance);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && state !== "gone") advance();
+  });
+</script>

@@ -1,6 +1,13 @@
 // Central place for contact details — used across the whole site.
 export const SITE = {
   name: "Agìkūyū Women & Men",
+
+  // Public address of the live website (no trailing slash). Used for canonical links, the sitemap
+  // and social-share cards. CHANGE THIS if the real domain is different, and update `site` in astro.config.mjs.
+  url: "https://agikuyuwomenandmen.co.ke",
+  logo: "/logo.png",
+  defaultImage: "/og-logo.png", // image used when a page is shared on WhatsApp / Facebook / X
+
   tagline: "Retrieve. Re-evaluate. Replenish. Document. Celebrate.",
 
   // One number for calls and WhatsApp.
@@ -26,6 +33,13 @@ export const SITE = {
     { id: "youtube",   label: "YouTube",   short: "YT", handle: "Gìkūyū and Mūmbi Women",       url: "https://www.youtube.com/@gikuyuandmumbiwomen4058" },
   ],
 };
+
+// Core SEO keywords — written both with and without diacritics because most people search without them.
+export const SEO_KEYWORDS = [
+  "Agikuyu culture", "Agikuyu heritage", "Kikuyu history", "Kikuyu traditions",
+  "Gīkūyū language", "Gikuyu language", "Learn Kikuyu online", "Agikuyu oral history",
+  "Agikuyu indigenous knowledge", "African cultural heritage", "Agikuyu cultural preservation",
+];
 
 // Builds a wa.me link with a prefilled message.
 export function whatsappLink(message) {

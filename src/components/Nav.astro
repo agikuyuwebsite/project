@@ -15,7 +15,10 @@ const links = [
 <div class="mm-backdrop" id="mmBackdrop"></div>
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <div class="mm-header">
-    <span class="mm-brand">{SITE.name}</span>
+    <a href="/" class="mm-logo" aria-label={SITE.name}>
+      <img src="/logo-mark.png" alt="" width="500" height="220" />
+      <span class="mm-brand">{SITE.name}</span>
+    </a>
     <button class="mm-close" id="mmClose" aria-label="Close menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
         <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
@@ -32,11 +35,7 @@ const links = [
 <header id="siteNav" class={solid ? "solid" : undefined}>
   <a href="/" class="brand">
     <div class="brand-mark">
-      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="22" cy="22" r="21" stroke="#d4a44c" stroke-width="1.2" opacity="0.6"></circle>
-        <path d="M22 8 L33 16 L29 30 L15 30 L11 16 Z" stroke="#d4a44c" stroke-width="1.4" fill="none"></path>
-        <circle cx="22" cy="21" r="4.5" fill="none" stroke="#d4a44c" stroke-width="1" opacity="0.55"></circle>
-      </svg>
+      <img src="/logo-mark.png" alt="Agìkūyū Women & Men emblem" width="500" height="220" />
     </div>
     <div class="brand-text">
       <span class="brand-name">{SITE.name}</span>
