@@ -4,7 +4,7 @@ export const SITE = {
 
   // Public address of the live website (no trailing slash). Used for canonical links, the sitemap
   // and social-share cards. CHANGE THIS if the real domain is different, and update `site` in astro.config.mjs.
-  url: "https://agikuyuwomenandmen.co.ke",
+  url: "https://www.agikuyuwomenandmen.co.ke",
   logo: "/logo.png",
   defaultImage: "/og-logo.png", // image used when a page is shared on WhatsApp / Facebook / X
 
